@@ -8,20 +8,33 @@ import hpp from 'hpp'
 import morgan from 'morgan'
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
-import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN, CREDENTIALS } from '@config'
+import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN, CREDENTIALS, HOST, SWAGGER_TITLE, SWAGGER_DESCRIPTION } from '@config'
 import { Routes } from '@interfaces/routes.interface'
 import { ErrorMiddleware } from '@middlewares/error.middleware'
 import { logger, stream } from '@utils/logger'
+import { appVersion } from '@/config/app-version.config'
 
 export class App {
   public app: express.Application
   public env: string
   public port: string | number
+  public host: string
+  public address: string
+  public appVersion: string
+  public swaggerTitle: string
+  public swaggerDescription: string
+  public swaggerVersion: string
 
   constructor(routes: Routes[]) {
     this.app = express()
     this.env = NODE_ENV || 'development'
     this.port = PORT || 3000
+    this.host = HOST || 'http://localhost'
+    this.appVersion = appVersion || '0.0.0'
+    this.address = `${this.host}:${this.port}`
+    this.swaggerTitle = SWAGGER_TITLE || 'Swagger title not set'
+    this.swaggerDescription = SWAGGER_DESCRIPTION || 'Swagger description not set'
+    this.swaggerVersion = this.appVersion
 
     this.initializeMiddlewares()
     this.initializeRoutes(routes)
@@ -31,10 +44,10 @@ export class App {
 
   public listen() {
     this.app.listen(this.port, () => {
-      logger.info(`=================================`)
-      logger.info(`======= ENV: ${this.env} =======`)
-      logger.info(`🚀 App listening on the port ${this.port}`)
-      logger.info(`=================================`)
+      console.clear()
+      logger.info(`Environment: ${this.env}`)
+      logger.info(`Swagger: ${this.address}/api-docs`)
+      console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     })
   }
 
@@ -63,9 +76,9 @@ export class App {
     const options = {
       swaggerDefinition: {
         info: {
-          title: 'REST API',
-          version: '1.0.0',
-          description: 'Example docs'
+          title: this.swaggerTitle,
+          version: this.swaggerVersion,
+          description: this.swaggerDescription
         }
       },
       apis: ['swagger.yaml']
