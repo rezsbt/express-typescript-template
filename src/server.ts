@@ -1,10 +1,10 @@
-import { App } from '@/app';
-import { AuthRoute } from '@routes/auth.route';
-import { UserRoute } from '@routes/users.route';
-import { ValidateEnv } from '@utils/validateEnv';
+import { App } from '@/app'
+import { AuthRoute } from '@routes/auth.route'
+import { UserRoute } from '@routes/users.route'
+import { ValidateEnv } from '@utils/validateEnv'
 
-ValidateEnv();
+ValidateEnv()
 
-const app = new App([new UserRoute(), new AuthRoute()]);
+const app = new App([new UserRoute(), new AuthRoute()])
 
-app.listen();
+app.listen()
