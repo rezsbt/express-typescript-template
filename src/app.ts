@@ -8,7 +8,7 @@ import hpp from 'hpp'
 import morgan from 'morgan'
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
-import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN, CREDENTIALS, HOST, SWAGGER_TITLE, SWAGGER_DESCRIPTION } from '@config'
+import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN, CREDENTIALS, HOST, SWAGGER_TITLE, SWAGGER_DESCRIPTION, SWAGGER_VERSION } from '@config'
 import { Routes } from '@interfaces/routes.interface'
 import { ErrorMiddleware } from '@middlewares/error.middleware'
 import { logger, stream } from '@utils/logger'
@@ -36,7 +36,7 @@ export class App {
     this.address = `${this.host}:${this.port}`
     this.swaggerTitle = SWAGGER_TITLE || 'Swagger title not set'
     this.swaggerDescription = SWAGGER_DESCRIPTION || 'Swagger description not set'
-    this.swaggerVersion = this.appVersion
+    this.swaggerVersion = SWAGGER_VERSION || this.appVersion
 
     this.initializeMiddlewares()
     this.initializeRoutes(routes)
@@ -75,9 +75,8 @@ export class App {
   }
 
   private initializeSwagger() {
-    
     const theme = new SwaggerTheme()
-    
+
     const options = {
       swaggerDefinition: {
         info: {
@@ -90,10 +89,14 @@ export class App {
     }
 
     const specs = swaggerJSDoc(options)
-    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
-      explorer: true,
-      customCss: theme.getBuffer(SwaggerThemeNameEnum.DARK)
-    }))
+    this.app.use(
+      '/api-docs',
+      swaggerUi.serve,
+      swaggerUi.setup(specs, {
+        explorer: true,
+        customCss: theme.getBuffer(SwaggerThemeNameEnum.DARK)
+      })
+    )
   }
 
   private initializeErrorHandling() {
