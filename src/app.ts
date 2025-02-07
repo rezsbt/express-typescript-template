@@ -13,6 +13,8 @@ import { Routes } from '@interfaces/routes.interface'
 import { ErrorMiddleware } from '@middlewares/error.middleware'
 import { logger, stream } from '@utils/logger'
 import { appVersion } from '@/config/app-version.config'
+import { SwaggerTheme } from 'swagger-themes'
+import { SwaggerThemeNameEnum } from 'swagger-themes'
 
 export class App {
   public app: express.Application
@@ -73,6 +75,9 @@ export class App {
   }
 
   private initializeSwagger() {
+    
+    const theme = new SwaggerTheme()
+    
     const options = {
       swaggerDefinition: {
         info: {
@@ -85,7 +90,10 @@ export class App {
     }
 
     const specs = swaggerJSDoc(options)
-    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
+      explorer: true,
+      customCss: theme.getBuffer(SwaggerThemeNameEnum.DARK)
+    }))
   }
 
   private initializeErrorHandling() {
