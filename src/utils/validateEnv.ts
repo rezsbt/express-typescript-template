@@ -1,10 +1,10 @@
-import { cleanEnv, host, port, str } from 'envalid'
+import { cleanEnv, port, str } from 'envalid'
 
 export const ValidateEnv = () => {
   cleanEnv(process.env, {
     NODE_ENV: str(),
     PORT: port(),
-    HOST: host(),
+    HOST: str(),
     SWAGGER_TITLE: str(),
     SWAGGER_DESCRIPTION: str()
   })
