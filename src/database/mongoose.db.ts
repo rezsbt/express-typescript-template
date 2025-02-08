@@ -1,5 +1,5 @@
 import { connect, set } from 'mongoose'
-import { NODE_ENV, DATABASE_URI, DATABASE_NAME } from '@config'
+import { NODE_ENV, DATABASE_URI, DATABASE_NAME } from '@/config'
 import { logger } from '@/utils/logger'
 
 export const connectToMongodb = async () => {

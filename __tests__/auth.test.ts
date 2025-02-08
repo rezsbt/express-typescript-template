@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { App } from '@/app';
-import { User } from '@interfaces/users.interface';
-import { AuthRoute } from '@routes/auth.route';
+import { User } from '@/interfaces/users.interface';
+import { AuthRoute } from '@/routes/auth.route';
 
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));

@@ -1,4 +1,4 @@
-import { User } from '@interfaces/users.interface'
+import { User } from '@/interfaces/users.interface'
 
 // password: password123456789
 export const UserModel: User[] = [
