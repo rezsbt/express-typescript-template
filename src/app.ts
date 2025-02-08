@@ -15,6 +15,7 @@ import { logger, stream } from '@utils/logger'
 import { appVersion } from '@/config/app-version.config'
 import { SwaggerTheme } from 'swagger-themes'
 import { SwaggerThemeNameEnum } from 'swagger-themes'
+import { connectToMongodb } from '@/database/mongoose.db'
 
 export class App {
   public app: express.Application
@@ -37,24 +38,29 @@ export class App {
     this.swaggerTitle = SWAGGER_TITLE || 'Swagger title not set'
     this.swaggerDescription = SWAGGER_DESCRIPTION || 'Swagger description not set'
     this.swaggerVersion = SWAGGER_VERSION || this.appVersion
-
+    
+    this.connectToDatabase()
     this.initializeMiddlewares()
     this.initializeRoutes(routes)
     this.initializeSwagger()
     this.initializeErrorHandling()
   }
 
-  public listen() {
-    this.app.listen(this.port, () => {
+  public listen () {
+    this.app.listen(this.port, async () => {
       console.clear()
-      logger.info(`Environment: ${this.env}`)
-      logger.info(`Swagger: ${this.address}/api-docs`)
-      console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+      logger.info(`Node environment: ${this.env}`)
+      logger.info(`Swagger URL: ${this.address}/api-docs`)
+            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     })
   }
 
   public getServer() {
     return this.app
+  }
+  
+  private async connectToDatabase () {
+    await connectToMongodb()
   }
 
   private initializeMiddlewares() {
@@ -76,7 +82,7 @@ export class App {
 
   private initializeSwagger() {
     const theme = new SwaggerTheme()
-
+    
     const options = {
       swaggerDefinition: {
         info: {
