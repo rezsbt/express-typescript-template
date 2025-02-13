@@ -1,4 +1,3 @@
-import 'reflect-metadata'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
@@ -8,7 +7,17 @@ import hpp from 'hpp'
 import morgan from 'morgan'
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
-import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN, CREDENTIALS, HOST, SWAGGER_TITLE, SWAGGER_DESCRIPTION, SWAGGER_VERSION } from '@/config'
+import {
+  NODE_ENV,
+  PORT,
+  LOG_FORMAT,
+  ORIGIN,
+  CREDENTIALS,
+  HOST,
+  SWAGGER_TITLE,
+  SWAGGER_DESCRIPTION,
+  SWAGGER_VERSION
+} from '@/config'
 import { Routes } from '@/interfaces/routes.interface'
 import { ErrorMiddleware } from '@/middlewares/error.middleware'
 import { logger, stream } from '@/utils/logger'
@@ -38,7 +47,6 @@ export class App {
     this.swaggerTitle = SWAGGER_TITLE || 'Swagger title not set'
     this.swaggerDescription = SWAGGER_DESCRIPTION || 'Swagger description not set'
     this.swaggerVersion = SWAGGER_VERSION || this.appVersion
-    
     this.connectToDatabase()
     this.initializeMiddlewares()
     this.initializeRoutes(routes)
@@ -46,20 +54,19 @@ export class App {
     this.initializeErrorHandling()
   }
 
-  public listen () {
+  public listen() {
     this.app.listen(this.port, async () => {
       console.clear()
       logger.info(`Node environment: ${this.env}`)
       logger.info(`Swagger URL: ${this.address}/api-docs`)
-            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     })
   }
 
   public getServer() {
     return this.app
   }
-  
-  private async connectToDatabase () {
+
+  private async connectToDatabase() {
     await connectToMongodb()
   }
 
@@ -76,13 +83,13 @@ export class App {
 
   private initializeRoutes(routes: Routes[]) {
     routes.forEach(route => {
-      this.app.use('/', route.router)
+      this.app.use(route?.path || '/', route.router)
     })
   }
 
   private initializeSwagger() {
     const theme = new SwaggerTheme()
-    
+
     const options = {
       swaggerDefinition: {
         info: {
