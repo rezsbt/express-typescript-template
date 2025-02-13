@@ -5,10 +5,12 @@ const sampleSchema = new Schema<ISample>(
   {
     title: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     description: {
-      type: String
+      type: String,
+      default: null
     }
   },
   {
