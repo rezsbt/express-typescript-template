@@ -12,6 +12,6 @@ export const ValidateEnv = () => {
     SWAGGER_DESCRIPTION: str(),
     // ** Database
     DATABASE_URI: str(),
-    DATABASE_NAME: str(),
+    DATABASE_NAME: str()
   })
 }
