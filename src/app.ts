@@ -21,10 +21,10 @@ import {
 import { Routes } from '@/interfaces/routes.interface'
 import { ErrorMiddleware } from '@/middlewares/error.middleware'
 import { logger, stream } from '@/utils/logger'
-import { appVersion } from '@/config/app-version.config.config'
 import { SwaggerTheme } from 'swagger-themes'
 import { SwaggerThemeNameEnum } from 'swagger-themes'
 import { connectToMongodb } from '@/database/mongoose.db'
+import { appVersion } from '@/config/app-version.config'
 
 export class App {
   public app: express.Application
