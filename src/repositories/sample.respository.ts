@@ -6,7 +6,6 @@ import { Service } from 'typedi'
 @Service()
 export class SampleRepository {
   private model: Model<ISample>
-
   constructor() {
     this.model = sampleModel
   }

@@ -9,9 +9,9 @@ export class SampleController {
     this.service = Container.get(SampleService)
   }
 
-  public getSamples = async (_req: Request, res: Response, next: NextFunction) => {
+  public getAll = async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      const data = await this.service.findAll()
+      const data = await this.service.getAll()
       res.status(200).json({ message: 'Samples list', data: data })
     } catch (error) {
       next(error)

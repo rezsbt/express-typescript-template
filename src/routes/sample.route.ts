@@ -15,6 +15,6 @@ export class SampleRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get('/', this.controller.getSamples)
+    this.router.get('/', this.controller.getAll)
   }
 }

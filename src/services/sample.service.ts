@@ -10,7 +10,7 @@ export class SampleService {
     this.repo = Container.get(SampleRepository)
   }
 
-  public findAll = async (): Promise<ISample[]> => {
+  public getAll = async (): Promise<ISample[]> => {
     const samples: ISample[] = await this.repo.getAll()
     return samples
   }
