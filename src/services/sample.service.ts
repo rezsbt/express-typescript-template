@@ -1,4 +1,4 @@
-import { ISample } from '@/interfaces/sample.interface'
+import { CreateSampleDto, ISample } from '@/interfaces/sample.interface'
 import { SampleRepository } from '@/repositories/sample.respository'
 import Container, { Service } from 'typedi'
 
@@ -11,7 +11,11 @@ export class SampleService {
   }
 
   public getAll = async (): Promise<ISample[]> => {
-    const samples: ISample[] = await this.repo.getAll()
-    return samples
+    const data: ISample[] = await this.repo.getAll()
+    return data
+  }
+  public create = async (sampleDto: CreateSampleDto): Promise<ISample> => {
+    const data: ISample = await this.repo.create(sampleDto)
+    return data
   }
 }

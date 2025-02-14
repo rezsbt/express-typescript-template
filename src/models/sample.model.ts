@@ -6,11 +6,13 @@ const sampleSchema = new Schema<ISample>(
     title: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
+      lowercase: true
     },
     description: {
       type: String,
-      default: null
+      default: null,
+      lowercase: true
     }
   },
   {

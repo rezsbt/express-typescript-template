@@ -17,4 +17,13 @@ export class SampleController {
       next(error)
     }
   }
+  public create = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { title, description } = req.body || {}
+      const data = await this.service.create({ title, description })
+      res.status(201).json({ message: 'new sample created successfully', data })
+    } catch (error) {
+      next(error)
+    }
+  }
 }

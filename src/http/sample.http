@@ -4,3 +4,12 @@
 ###
 GET {{ baseUrl }}/samples
 Content-Type: application/json
+
+###
+POST {{ baseUrl }}/samples
+Content-Type: application/json
+
+{
+  "title": "title http documentation",
+  "description": "description http documentation"
+}
