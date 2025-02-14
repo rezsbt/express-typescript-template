@@ -98,7 +98,7 @@ export class App {
           description: this.swaggerDescription
         }
       },
-      apis: ['swagger.yaml']
+      apis: [process.cwd() + '/src/swagger/**/*.swagger.yaml']
     }
 
     const specs = swaggerJSDoc(options)

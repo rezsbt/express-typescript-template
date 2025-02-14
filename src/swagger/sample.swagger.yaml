@@ -1,0 +1,43 @@
+# definitions
+definitions:
+  sample:
+    type: object
+    required:
+        - title
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+
+# Paths
+paths:
+  /samples:
+    get:
+      tags:
+        - Samples
+      summary: Get all samples
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Internal Server Error'
+    post:
+      tags:
+        - Samples
+      summary: Create new sample
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/sample'
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
