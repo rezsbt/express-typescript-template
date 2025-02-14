@@ -1,7 +1,7 @@
 import { HttpException } from '@/exceptions/HttpException'
 import { CreateSampleDto, ISample } from '@/interfaces/sample.interface'
 import { sampleModel } from '@/models/sample.model'
-import { Model } from 'mongoose'
+import { Model, Types } from 'mongoose'
 import { Service } from 'typedi'
 
 @Service()
@@ -13,6 +13,12 @@ export class SampleRepository {
 
   public getAll = async (): Promise<ISample[]> => {
     const data = await this.model.find()
+    return data
+  }
+  public getById = async (id: string): Promise<ISample> => {
+    this.checkIsValidId(id)
+    const data = await this.model.findById(id)
+    if (!data) throw new HttpException(404, 'sample not found')
     return data
   }
   public create = async (sampleDto: CreateSampleDto): Promise<ISample> => {
@@ -29,5 +35,9 @@ export class SampleRepository {
   public checkExistByTitle = async (title: string): Promise<ISample | null> => {
     const data = await this.model.findOne({ title })
     return data
+  }
+  public checkIsValidId = (id: string): void => {
+    const isValid = Types.ObjectId.isValid(id)
+    if (!isValid) throw new HttpException(400, 'invalid id format')
   }
 }

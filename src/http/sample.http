@@ -6,6 +6,10 @@ GET {{ baseUrl }}/samples
 Content-Type: application/json
 
 ###
+GET {{ baseUrl }}/samples/67af7b81aba69a5a377eacfe
+Content-Type:  application/application/json
+
+###
 POST {{ baseUrl }}/samples
 Content-Type: application/json
 

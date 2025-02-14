@@ -12,7 +12,16 @@ export class SampleController {
   public getAll = async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const data = await this.service.getAll()
-      res.status(200).json({ message: 'Samples list', data: data })
+      res.status(200).json({ message: 'Samples list', data })
+    } catch (error) {
+      next(error)
+    }
+  }
+  public getById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = req.params?.id
+      const data = await this.service.getById(id)
+      res.status(200).json({ message: 'Get sample by id', data })
     } catch (error) {
       next(error)
     }

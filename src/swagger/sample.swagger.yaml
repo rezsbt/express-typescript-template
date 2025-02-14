@@ -13,6 +13,7 @@ definitions:
 # Paths
 paths:
   /samples:
+    # [GET] /samples
     get:
       tags:
         - Samples
@@ -22,6 +23,7 @@ paths:
           description: 'OK'
         500:
           description: 'Internal Server Error'
+    # [POST] /samples
     post:
       tags:
         - Samples
@@ -41,3 +43,20 @@ paths:
           description: 'Conflict'
         500:
           description: 'Server Error'
+  /samples/{id}:
+    # [GET] /samples/:id
+    get:
+      tags:
+        - Samples
+      summary: Get sample by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+      responses:
+        200:
+          description: 'OK'
+        404:
+          description: 'Not Found'
+        500:
+          description: 'Internal Server Error'
