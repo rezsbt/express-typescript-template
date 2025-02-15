@@ -16,18 +16,15 @@ export class SampleRepository {
     return data
   }
   public getById = async (id: string): Promise<ISample> => {
-    this.checkIsValidId(id)
-    const data = await this.model.findById(id)
-    if (!data) throw new HttpException(404, 'sample not found')
+    const data = await this.findById(id)
     return data
   }
   public create = async (sampleDto: CreateSampleDto): Promise<ISample> => {
-    const sample = await this.checkExistByTitle(sampleDto.title)
+    const sample = await this.findByTitle(sampleDto.title, false)
     if (!sample) {
       const data = await this.model.create(sampleDto)
       return data
     } else {
-      console.log(sample)
       throw new HttpException(409, 'sample with this title already exist.')
     }
   }
@@ -41,36 +38,19 @@ export class SampleRepository {
     await this.findById(id)
     const data = await this.model.findOneAndReplace({ _id: id }, sampleDto, { new: true, runValidators: true })
     return data
-    // const findById = await this.findById(id)
-    // const findByTitle = await this.findByTitle(sampleDto.title, false)
-    // if (!findByTitle) {
-    //   const data = await this.model.findByIdAndUpdate(id, sampleDto)
-    //   return data
-    // } else {
-    //   if (new Types.ObjectId(id).equals(findById._id as Types.ObjectId)) {
-    //     const data = await this.model.findByIdAndUpdate(id, sampleDto)
-    //     return data
-    //   } else {
-    //     throw new HttpException(400, 'sample with this title already exist')
-    //   }
-    // }
   }
 
-  public checkExistByTitle = async (title: string): Promise<ISample | null> => {
-    const data = await this.model.findOne({ title })
-    return data
-  }
-  public checkIsValidId = (id: string): void => {
+  private checkIsValidId = (id: string): void => {
     const isValid = Types.ObjectId.isValid(id)
     if (!isValid) throw new HttpException(400, 'invalid id format')
   }
-  public findById = async (id: string, throwError = true): Promise<ISample> => {
+  private findById = async (id: string, throwError = true): Promise<ISample> => {
     this.checkIsValidId(id)
     const data = await this.model.findById(id)
     if (!data && throwError) throw new HttpException(404, 'sample with this id not found')
     return data
   }
-  public findByTitle = async (title: string, throwError = true): Promise<ISample> => {
+  private findByTitle = async (title: string, throwError = true): Promise<ISample> => {
     const data = await this.model.findOne({ title })
     if (!data && throwError) throw new HttpException(404, 'sample with this title not found')
     return data
