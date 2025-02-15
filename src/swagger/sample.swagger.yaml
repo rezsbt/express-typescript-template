@@ -60,3 +60,25 @@ paths:
           description: 'Not Found'
         500:
           description: 'Internal Server Error'
+    put:
+      tags:
+        - Samples
+      summary: Update sample
+      parameters:
+      - name: id
+        in: path
+        required: true
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/sample'
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'

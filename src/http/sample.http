@@ -17,3 +17,12 @@ Content-Type: application/json
   "title": "title http documentation",
   "description": "description http documentation"
 }
+
+###
+PUT {{ baseUrl }}/samples/67af7b81aba69a5a377eacfe
+Content-Type: application/json
+
+{
+  "title": "title http documentation",
+  "description": "description http documentation"
+}

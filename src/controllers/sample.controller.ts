@@ -35,4 +35,14 @@ export class SampleController {
       next(error)
     }
   }
+  public update = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = req.params?.id
+      const { title, description } = req.body || {}
+      const data = await this.service.update(id, { title, description })
+      res.status(201).json({ message: 'sample updated successfully', data })
+    } catch (error) {
+      next(error)
+    }
+  }
 }

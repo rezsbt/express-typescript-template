@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
-export class CreateUserDto {
+export class CreateSampleDto {
   @IsString()
   @IsNotEmpty({ message: 'Sample title is required' })
   public title: string
@@ -9,3 +9,5 @@ export class CreateUserDto {
   @IsString()
   public description: string
 }
+
+export class UpdateSampleDto extends CreateSampleDto {}
