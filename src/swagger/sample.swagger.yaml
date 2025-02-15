@@ -60,6 +60,29 @@ paths:
           description: 'Not Found'
         500:
           description: 'Internal Server Error'
+    # [PUT] /samples/:id
+    put:
+      tags:
+      - Samples
+      summary: Update sample by id
+      parameters:
+      - name: id
+        in: path
+        required: true
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/sample'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
   /samples/{id}/hard:
     # [DELETE] /samples/:id ()
     delete:

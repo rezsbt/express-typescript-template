@@ -38,19 +38,22 @@ export class SampleRepository {
     }
   }
   public update = async (id: string, sampleDto: UpdateSampleDto): Promise<ISample> => {
-    const findById = await this.findById(id)
-    const findByTitle = await this.findByTitle(sampleDto.title, false)
-    if (!findByTitle) {
-      const data = await this.model.findByIdAndUpdate(id, sampleDto)
-      return data
-    } else {
-      if (new Types.ObjectId(id).equals(findById._id as Types.ObjectId)) {
-        const data = await this.model.findByIdAndUpdate(id, sampleDto)
-        return data
-      } else {
-        throw new HttpException(400, 'sample with this title already exist')
-      }
-    }
+    await this.findById(id)
+    const data = await this.model.findOneAndReplace({ _id: id }, sampleDto, { new: true, runValidators: true })
+    return data
+    // const findById = await this.findById(id)
+    // const findByTitle = await this.findByTitle(sampleDto.title, false)
+    // if (!findByTitle) {
+    //   const data = await this.model.findByIdAndUpdate(id, sampleDto)
+    //   return data
+    // } else {
+    //   if (new Types.ObjectId(id).equals(findById._id as Types.ObjectId)) {
+    //     const data = await this.model.findByIdAndUpdate(id, sampleDto)
+    //     return data
+    //   } else {
+    //     throw new HttpException(400, 'sample with this title already exist')
+    //   }
+    // }
   }
 
   public checkExistByTitle = async (title: string): Promise<ISample | null> => {

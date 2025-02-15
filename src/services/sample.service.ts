@@ -1,4 +1,4 @@
-import { CreateSampleDto, ISample } from '@/interfaces/sample.interface'
+import { CreateSampleDto, ISample, UpdateSampleDto } from '@/interfaces/sample.interface'
 import { SampleRepository } from '@/repositories/sample.respository'
 import Container, { Service } from 'typedi'
 
@@ -24,5 +24,9 @@ export class SampleService {
   }
   public hardDelete = async (id: string): Promise<void> => {
     await this.repo.hardDelete(id)
+  }
+  public update = async (id: string, sampleDto: UpdateSampleDto) => {
+    const data = await this.repo.update(id, sampleDto)
+    return data
   }
 }

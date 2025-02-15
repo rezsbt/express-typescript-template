@@ -1,8 +1,8 @@
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class CreateSampleDto {
-  @IsString()
   @IsNotEmpty({ message: 'Sample title is required' })
+  @IsString()
   public title: string
 
   @IsOptional()
