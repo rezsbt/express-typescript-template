@@ -1,5 +1,5 @@
 import { HttpException } from '@/exceptions/HttpException'
-import { CreateSampleDto, ISample } from '@/interfaces/sample.interface'
+import { CreateSampleDto, ISample, UpdateSampleDto } from '@/interfaces/sample.interface'
 import { sampleModel } from '@/models/sample.model'
 import { Model, Types } from 'mongoose'
 import { Service } from 'typedi'
@@ -35,6 +35,21 @@ export class SampleRepository {
     const data = await this.getById(id)
     if (data) {
       await this.model.findByIdAndDelete(id)
+    }
+  }
+  public update = async (id: string, sampleDto: UpdateSampleDto): Promise<ISample> => {
+    const findById = await this.findById(id)
+    const findByTitle = await this.findByTitle(sampleDto.title, false)
+    if (!findByTitle) {
+      const data = await this.model.findByIdAndUpdate(id, sampleDto)
+      return data
+    } else {
+      if (new Types.ObjectId(id).equals(findById._id as Types.ObjectId)) {
+        const data = await this.model.findByIdAndUpdate(id, sampleDto)
+        return data
+      } else {
+        throw new HttpException(400, 'sample with this title already exist')
+      }
     }
   }
 

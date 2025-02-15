@@ -10,4 +10,7 @@ export interface CreateSampleDto {
   description?: string
 }
 
-export type UpdateSampleDto = CreateSampleDto
+export interface UpdateSampleDto {
+  title: string
+  description?: string
+}
