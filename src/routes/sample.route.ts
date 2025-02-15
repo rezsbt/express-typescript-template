@@ -1,5 +1,5 @@
 import { SampleController } from '@/controllers/sample.controller'
-import { CreateUserDto } from '@/dtos/sample.dto'
+import { CreateSampleDto } from '@/dtos/sample.dto'
 import { Routes } from '@/interfaces/routes.interface'
 import { ValidationMiddleware } from '@/middlewares/validation.middleware'
 import { Router } from 'express'
@@ -19,7 +19,7 @@ export class SampleRoute implements Routes {
   private initializeRoutes() {
     this.router.get('/', this.controller.getAll)
     this.router.get('/:id', this.controller.getById)
-    this.router.post('/', ValidationMiddleware(CreateUserDto), this.controller.create)
+    this.router.post('/', ValidationMiddleware(CreateSampleDto), this.controller.create)
     this.router.delete('/:id/hard', this.controller.hardDelete)
   }
 }
