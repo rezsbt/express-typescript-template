@@ -46,4 +46,15 @@ export class SampleRepository {
     const isValid = Types.ObjectId.isValid(id)
     if (!isValid) throw new HttpException(400, 'invalid id format')
   }
+  public findById = async (id: string, throwError = true): Promise<ISample> => {
+    this.checkIsValidId(id)
+    const data = await this.model.findById(id)
+    if (!data && throwError) throw new HttpException(404, 'sample with this id not found')
+    return data
+  }
+  public findByTitle = async (title: string, throwError = true): Promise<ISample> => {
+    const data = await this.model.findOne({ title })
+    if (!data && throwError) throw new HttpException(404, 'sample with this title not found')
+    return data
+  }
 }
