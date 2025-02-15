@@ -20,5 +20,6 @@ export class SampleRoute implements Routes {
     this.router.get('/', this.controller.getAll)
     this.router.get('/:id', this.controller.getById)
     this.router.post('/', ValidationMiddleware(CreateUserDto), this.controller.create)
+    this.router.delete('/:id/hard', this.controller.hardDelete)
   }
 }
