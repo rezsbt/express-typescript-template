@@ -18,6 +18,7 @@ export class SampleRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get('/', this.controller.getAll)
+    this.router.get('/:id', this.controller.getById)
     this.router.post('/', ValidationMiddleware(CreateUserDto), this.controller.create)
   }
 }
