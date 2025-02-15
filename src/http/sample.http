@@ -1,15 +1,15 @@
 # Variables
 @baseUrl = http://localhost:4000
 
-###
+### Get all samples
 GET {{ baseUrl }}/samples
 Content-Type: application/json
 
-###
-GET {{ baseUrl }}/samples/67af7b81aba69a5a377eacfe
+### Get sample by ID (title: 'title http documentation')
+GET {{ baseUrl }}/samples/67b03f5f6191f97ab2dec273
 Content-Type:  application/application/json
 
-###
+### Create sample
 POST {{ baseUrl }}/samples
 Content-Type: application/json
 
@@ -17,3 +17,15 @@ Content-Type: application/json
   "title": "title http documentation",
   "description": "description http documentation"
 }
+
+### Create sample (for delete)
+POST {{ baseUrl }}/samples
+Content-Type: application/json
+
+{
+  "title": "delete this sample"
+}
+
+### Hard delete sample by ID (title: 'delete this sample')
+DELETE {{ baseUrl }}/samples/67b07d91a3b6f75b4e584570/hard
+Content-Type: application/json

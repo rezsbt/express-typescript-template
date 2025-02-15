@@ -22,4 +22,7 @@ export class SampleService {
     const data: ISample = await this.repo.create(sampleDto)
     return data
   }
+  public hardDelete = async (id: string): Promise<void> => {
+    await this.repo.hardDelete(id)
+  }
 }

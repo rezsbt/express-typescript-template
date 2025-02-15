@@ -60,3 +60,20 @@ paths:
           description: 'Not Found'
         500:
           description: 'Internal Server Error'
+  /samples/{id}/hard:
+    # [DELETE] /samples/:id ()
+    delete:
+      tags:
+        - Samples
+      summary: Delete sample by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+      responses:
+        200:
+          description: 'OK'
+        404:
+          description: 'Not Found'
+        500:
+          description: 'Internal Server Error'

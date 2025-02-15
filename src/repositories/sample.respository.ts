@@ -31,6 +31,12 @@ export class SampleRepository {
       throw new HttpException(409, 'sample with this title already exist.')
     }
   }
+  public hardDelete = async (id: string): Promise<void> => {
+    const data = await this.getById(id)
+    if (data) {
+      await this.model.findByIdAndDelete(id)
+    }
+  }
 
   public checkExistByTitle = async (title: string): Promise<ISample | null> => {
     const data = await this.model.findOne({ title })

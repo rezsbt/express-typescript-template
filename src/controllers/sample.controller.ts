@@ -35,4 +35,13 @@ export class SampleController {
       next(error)
     }
   }
+  public hardDelete = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = req.params?.id
+      await this.service.hardDelete(id)
+      res.status(200).json({ message: 'sample hard deleted successfully' })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
